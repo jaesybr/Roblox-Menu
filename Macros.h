@@ -10,7 +10,9 @@
 #import "Obfuscate.h"
 #import "KittyMemory/writeData.hpp"
 
-#include <substrate.h>
+// Include Cydia Substrate header
+#include "substrate.h"
+
 #include <mach-o/dyld.h>
 
 // definition at Menu.h
@@ -31,17 +33,17 @@ extern Switches *switches;
 #define UIColorFromHex(hexColor) [UIColor colorWithRed:((float)((hexColor & 0xFF0000) >> 16))/255.0 green:((float)((hexColor & 0xFF00) >> 8))/255.0 blue:((float)(hexColor & 0xFF))/255.0 alpha:1.0]
 
 uint64_t getRealOffset(uint64_t offset){
-	return KittyMemory::getAbsoluteAddress([menu getFrameworkName], offset);
+    return KittyMemory::getAbsoluteAddress([menu getFrameworkName], offset);
 }
 
 // Patching a offset without switch.
 void patchOffset(uint64_t offset, std::string hexBytes) {
-	MemoryPatch patch = MemoryPatch::createWithHex([menu getFrameworkName], offset, hexBytes);
-	if(!patch.isValid()){
-		[menu showPopup:@"Invalid patch" description:[NSString stringWithFormat:@"Failing offset: 0x%llu, please re-check the hex you entered.", offset]];
-		return;
-	}
-	if(!patch.Modify()) {
+    MemoryPatch patch = MemoryPatch::createWithHex([menu getFrameworkName], offset, hexBytes);
+    if(!patch.isValid()){
+        [menu showPopup:@"Invalid patch" description:[NSString stringWithFormat:@"Failing offset: 0x%llu, please re-check the hex you entered.", offset]];
+        return;
+    }
+    if(!patch.Modify()) {
       [menu showPopup:@"Something went wrong!" description:[NSString stringWithFormat:@"Something went wrong while patching this offset: 0x%llu", offset]];
     }
 }
