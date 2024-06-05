@@ -1,5 +1,5 @@
 # THEOS_DEVICE_IP = 127.0.0.1 -p 2222 # install to device from pc
-ARCHS = arm64 #arm64e
+ARCHS = arm64
 DEBUG = 0
 FINALPACKAGE = 1
 FOR_RELEASE = 1
@@ -16,7 +16,7 @@ IGNORE_WARNINGS=0
 MOBILE_THEOS=1
 ifeq ($(MOBILE_THEOS),1)
   # path to your sdk
-  SDK_PATH = $(THEOS)/sdks/iPhoneOS11.2.sdk/
+  SDK_PATH = $(THEOS)/sdks/iPhoneOS16.5.sdk/
   $(info ===> Setting SYSROOT to $(SDK_PATH)...)
   SYSROOT = $(SDK_PATH)
 else
